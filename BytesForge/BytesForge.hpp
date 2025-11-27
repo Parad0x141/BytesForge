@@ -1,4 +1,4 @@
-﻿// Version 0.3.1 Code by Cyril "Parad0x141" Bouvier - 2025
+﻿// BytesForge Version 0.3.1 Code by Cyril "Parad0x141" Bouvier - 2025
 
 
 // Based on various public resources and personal knowledge of x64 assembly,
@@ -46,7 +46,7 @@
  /// X64 Runtime Assembler - Generate shellcode dynamically
  /// Supports common x64 instructions & provide a simple API to work with assembly at runtime.
  /// </summary>
-class X64Assembler {
+class BytesForge {
 private:
 	std::vector<uint8_t> code;
 
@@ -134,7 +134,7 @@ private:
 	}
 
 public:
-	X64Assembler() = default;
+	BytesForge() = default;
 
 	// ============================================================
 	// MOV Instructions - Register to Immediate
@@ -754,7 +754,7 @@ public:
 
 	static std::vector<uint8_t> CreateSimpleHook(uint64_t targetAddress)
 	{
-		X64Assembler asm_builder;
+		BytesForge asm_builder;
 		asm_builder.MovRax(targetAddress);
 		asm_builder.JmpRax();
 		return asm_builder.GetBytes();
@@ -769,7 +769,7 @@ public:
 		uint64_t returnAddress,
 		bool preserveFlags = true)
 	{
-		X64Assembler asm_builder;
+		BytesForge asm_builder;
 
 		// 1. Save ALL registers
 		if (preserveFlags) asm_builder.Pushfq();  // +8
@@ -855,7 +855,7 @@ public:
 		uint64_t arg3 = 0,
 		uint64_t arg4 = 0)
 	{
-		X64Assembler asm_builder;
+		BytesForge asm_builder;
 
 		//    Save volatile registers (RAX will hold function address temporarily)
 		//    We DON'T save RCX, RDX, R8, R9 because we're about to overwrite them
@@ -899,7 +899,7 @@ public:
 		uint64_t functionAddress,
 		const std::vector<uint64_t>& args)
 	{
-		X64Assembler asm_builder;
+		BytesForge asm_builder;
 
 		if (args.size() > 8)
 		{
@@ -1069,7 +1069,7 @@ public:
 	/// </summary>
 	static std::vector<uint8_t> CreateMinimalHook(uint64_t targetAddress)
 	{
-		X64Assembler asm_builder;
+		BytesForge asm_builder;
 		asm_builder.MovRax(targetAddress);
 		asm_builder.JmpRax();
 		return asm_builder.GetBytes();
